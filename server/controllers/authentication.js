@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
+const jwt = require('jwt-simple');
 
 const UserModelClass = mongoose.model('users');
+
+const userToken = (user) => {
+    const timestamp = new Date().getTime();
+    return jwt.encode({ sub: user.id, iat: timestamp }, config.secret);
+}
 
 exports.signup = (req, res, next) => {
     const { email } = req.body;
@@ -23,7 +29,7 @@ exports.signup = (req, res, next) => {
         });
 
         newUser.save( (err) => {
-            res.json({ success: true });
+            res.json({ token: userToken(newUser) });
         });
     });
 }
