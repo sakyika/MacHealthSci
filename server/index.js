@@ -3,7 +3,10 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 
+require('./models/user')
+
 const keys = require('./config/keys');
+
 
 mongoose.connect(keys.mongoUri);
 
